@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require("./User");
 
 router.get("/user/create", (req, res) => {
-    res.send("ola");
+    res.render("users/create");
 });
 
 module.exports = router;
