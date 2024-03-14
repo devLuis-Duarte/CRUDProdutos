@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("./User");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
+const session = require("express-session");
 
 router.get("/user/create", (req, res) => {
     res.render("users/create");
@@ -15,7 +16,7 @@ router.post("/user/save", (req, res) => {
     
     if(email != undefined){
         var salt = bcrypt.genSaltSync(10);
-        var hash = bcrypt.compareSync(password, salt);
+        var hash = bcrypt.hashSync(password, salt);
 
         User.create({
             name: name,
@@ -35,6 +36,32 @@ router.post("/user/save", (req, res) => {
 router.get("/user/login", (req, res) => {
     res.render("users/login");
 })
+
+router.post("/user/authenticate", (req, res) => {
+    var email = req.body.email;
+    var password = req.body.password;
+
+    User.findOne({
+        where: {
+            email: email
+        }
+    }).then((user) => {
+        if(user != undefined){
+            var correct = bcrypt.compareSync(password, user.password);
+            if(correct){
+                req.session.user = {
+                    id: user.id,
+                    email: user.email
+                }
+                res.send("bem vindo");
+            }else {
+                res.redirect("/user/login")
+            }
+        }else {
+            res.redirect("/user/create");
+        }
+    })
+});
 
 module.exports = router;
 
