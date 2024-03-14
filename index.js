@@ -18,7 +18,7 @@ connection.authenticate().then(() => {
 app.use("/", UserController);
 
 app.get("/", (req, res) => {
-    res.send("ola mundo");
+    res.render("home");
 });
 
 app.listen(3000, () => {

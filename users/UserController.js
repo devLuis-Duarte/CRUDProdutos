@@ -30,6 +30,10 @@ router.post("/user/save", (req, res) => {
     }else {
         res.redirect("/");
     }
+});
+
+router.get("/user/login", (req, res) => {
+    res.render("users/login");
 })
 
 module.exports = router;
