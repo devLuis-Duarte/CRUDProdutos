@@ -34,7 +34,13 @@ router.post("/user/save", (req, res) => {
 });
 
 router.get("/user/login", (req, res) => {
-    res.render("users/login");
+    const user = req.session.user;
+    
+    if(user){
+        res.render("products/index");
+    }else {
+        res.render("users/login");
+    }
 })
 
 router.post("/user/authenticate", (req, res) => {
@@ -53,7 +59,7 @@ router.post("/user/authenticate", (req, res) => {
                     id: user.id,
                     email: user.email
                 }
-                res.send("bem vindo");
+                res.render("products/index");
             }else {
                 res.redirect("/user/login")
             }
@@ -62,6 +68,11 @@ router.post("/user/authenticate", (req, res) => {
         }
     })
 });
+
+router.get("/logout", (req, res) => {
+    req.session.user = undefined;
+    res.redirect("/");
+})
 
 module.exports = router;
 
