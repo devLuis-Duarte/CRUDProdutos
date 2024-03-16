@@ -9,9 +9,13 @@ const connection  = require("./database/database");
 
 //models
 const User = require("./users/User");
+const Product = require("./produtcts/Product");
+const ProductUser = require("./productUser/ProductUser");
 
 //controllers
 const UserController = require("./users/UsersController");
+const ProductsController = require("./produtcts/ProductsController");
+
 
 //view engine
 app.set('view engine', 'ejs');
@@ -35,6 +39,7 @@ connection.authenticate().then(() => {
 
 
 app.use("/", UserController);
+app.use("/", ProductsController);
 
 app.get("/", (req, res) => {
     res.render("home");

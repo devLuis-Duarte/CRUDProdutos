@@ -1,0 +1,27 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbarAuth.ejs') %>
+<body>
+    <div class="container">
+        <hr>
+        <div class="card">
+            <div class="card-header">
+                <h3>Cadastro de produtos</h3>
+            </div>
+
+            <div class="card-body">
+                <form action="/product/save" method="post">
+                    <input type="text" class="form-control" name="name" placeholder="Produto">
+                    <br>
+                    <input type="number" class="form-control" name="quantity" min="1" placeholder="Quantidade em estoque">
+                    <br>
+                    <input type="number" class="form-control" name="price" min="1" step="0.1" placeholder="Custo em R$">
+                    <br>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../partials/footer.ejs') %>

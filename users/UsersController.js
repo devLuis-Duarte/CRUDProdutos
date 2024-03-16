@@ -59,7 +59,9 @@ router.post("/user/authenticate", (req, res) => {
                     id: user.id,
                     email: user.email
                 }
-                res.render("products/index");
+                res.render("products/index", {
+                    user: user
+                });
             }else {
                 res.redirect("/user/login")
             }
