@@ -38,7 +38,11 @@ router.get("/user/login", (req, res) => {
     const user = req.session.user;
     
     if(user){
-        Product.findAll().then((products) => {
+        Product.findAll({
+            where: {
+                id: user.id
+            }
+        }).then((products) => {
             res.render("products/index", {
                 products: products,
                 user: user
@@ -65,7 +69,11 @@ router.post("/user/authenticate", (req, res) => {
                     id: user.id,
                     email: user.email
                 }
-                Product.findAll().then((products) => {
+                Product.findAll({
+                    where: {
+                        userId: user.id
+                    }
+                }).then((products) => {
                     res.render("products/index", {
                         user: user,
                         products: products
