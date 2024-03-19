@@ -27,11 +27,16 @@
                                 <td><%= product.quantity %></td>
                                 <td>R$<%= product.price %></td>
                                 <td>
-                                    <button class="btn btn-danger">Excluir</button>
-                                    <button class="btn btn-warning">Editar</button>
+                                    <form id="form" action="/product/delete" method="post" onsubmit="deleteConfirmation(event, this)" style="display: inline;">
+                                        <button class="btn btn-danger">Excluir</button>
+                                        <input type="hidden" name="productId" value="<%= product.id %>">
+                                    </form>
+                                    
+                                    <a href="/product/edit/<%= product.id %>" class="btn btn-warning">Editar</a>
                                 </td>
                             </tr>
                             <% }) %>
+                           
                         </tbody>
                     </thead>
                 </table>
@@ -40,3 +45,15 @@
     </div>
 </body>
 <%- include('../partials/footer.ejs') %>
+
+<script>
+    function deleteConfirmation(event, form){
+        event.preventDefault();
+        var response = confirm("Você tem certeza que deseja excluir este produto?");
+        
+        if(response){
+            form.submit();
+        }
+
+    }
+</script>

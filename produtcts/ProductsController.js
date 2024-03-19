@@ -5,6 +5,24 @@ const sequelize = require("sequelize");
 const router = express.Router();
 const bodyParser = require("body-parser");
 
+
+router.get("/products", (req, res) => {
+    const user = req.session.user;
+    
+    if(user){
+        Product.findAll({
+            where: {
+                id: user.id
+            }
+        }).then((products) => {
+            res.render("products/index", {
+                products: products,
+                user: user
+            })
+        })
+    }
+})
+
 router.get("/product/create", (req, res) => {
     const user = req.session.user;
     
@@ -40,6 +58,43 @@ router.post("/product/save", (req, res) => {
             res.redirect("/");
         })
     }
+
+});
+
+router.get("/product/edit/:id", (req, res) => {
+    const user = req.session.user;
+    
+    if(user){
+        var id = req.params.id;
+
+        if(!isNaN(id)){
+            Product.findByPk(id).then((product) => {
+                res.render("products/edit", {
+                    product: product, 
+                    user: user
+                });
+            })
+        }else {
+            res.redirect("/");
+        }
+    }else {
+        res.redirect("/");
+    }
+});
+
+router.post("/product/delete", (req, res) => {
+   const user = req.session.user;
+   var productId = req.body.productId;
+
+   if(user){
+    Product.destroy({
+        where: {
+            id: productId
+        }
+   }).then(() => {
+        res.redirect("/");
+   })
+   }
 
 });
 

@@ -1,0 +1,40 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbarAuth.ejs') %>
+<body>
+    <div class="container">
+        <hr>
+        <div class="card">
+            <div class="card-header">
+                <h3 style="text-align: center;">Edição de produto</h3>
+            </div>
+
+            <div class="card-body">
+                <form action="/product/update" method="post">
+                    <label for="">Produto atual</label>
+                    <input type="text" class="form-control" name="oldName" placeholder="Produto" value="<%= product.name %>">
+                    <br>
+                    <label for="">Novo produto</label>
+                    <input type="text" class="form-control" name="name" placeholder="Produto">
+                    <br>
+                    <label for="oldQuantity">Quantidade atual em estoque</label>
+                    <input type="number" class="form-control" name="oldQuantity" min="1" placeholder="Quantidade em estoque" value="<%= product.quantity %>">
+                    <br>
+                    <label for="quantity">Nova quantidade em estoque</label>
+                    <input type="number" class="form-control" name="quantity" min="1" placeholder="Quantidade em estoque">
+                    <br>
+                    <label for="">Preço atual</label>
+                    <input type="number" class="form-control" name="oldPrice" min="1" step="0.1" placeholder="Custo em R$" value="<%= product.price %>">
+                    <br>
+                    <label for="">Novo preço</label>
+                    <input type="number" class="form-control" name="price" min="1" step="0.1" placeholder="Custo em R$">
+                    <br>
+                    <input type="hidden" name="userId" value="<%= user.id %>">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success">Atualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../partials/footer.ejs') %>
