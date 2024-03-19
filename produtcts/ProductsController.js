@@ -117,6 +117,8 @@ router.post("/product/delete", (req, res) => {
     }).then(() => {
          res.redirect("/products");
     })
+ }else {
+    res.redirect("/");
  }
 
 });
