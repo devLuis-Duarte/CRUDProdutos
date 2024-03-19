@@ -40,7 +40,7 @@ router.get("/user/login", (req, res) => {
     if(user){
         Product.findAll({
             where: {
-                id: user.id
+                userId: user.id
             }
         }).then((products) => {
             res.render("products/index", {

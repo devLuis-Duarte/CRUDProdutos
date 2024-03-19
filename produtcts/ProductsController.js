@@ -12,7 +12,7 @@ router.get("/products", (req, res) => {
     if(user){
         Product.findAll({
             where: {
-                id: user.id
+                userId: user.id
             }
         }).then((products) => {
             res.render("products/index", {
@@ -20,6 +20,8 @@ router.get("/products", (req, res) => {
                 user: user
             })
         })
+    }else {
+        res.redirect("/");
     }
 })
 
@@ -49,11 +51,8 @@ router.post("/product/save", (req, res) => {
             quantity: quantity,
             price: price,
             userId: userId
-        }).then((products) => {
-            res.render("products/create", {
-                product: products,
-                user: user
-            })
+        }).then(() => {
+            res.redirect("/products");
         }).catch((error) => {
             res.redirect("/");
         })
@@ -82,19 +81,43 @@ router.get("/product/edit/:id", (req, res) => {
     }
 });
 
-router.post("/product/delete", (req, res) => {
-   const user = req.session.user;
-   var productId = req.body.productId;
+router.post("/product/update", (req, res) => {
+    const user = req.session.user;
+    var id = req.body.productId;
+    var name = req.body.name;
+    var quantity = req.body.quantity;
+    var price = req.body.price;
 
-   if(user){
-    Product.destroy({
-        where: {
-            id: productId
-        }
-   }).then(() => {
+    if(user){
+        Product.update({
+            name: name,
+            quantity: quantity,
+            price: price,
+        }, {
+            where: {
+                id: id
+            }
+        }).then(() => {
+            res.redirect("/products");
+        })
+    }else {
         res.redirect("/");
-   })
-   }
+    }
+});
+
+router.post("/product/delete", (req, res) => {
+    const user = req.session.user;
+    var productId = req.body.productId;
+ 
+    if(user){
+     Product.destroy({
+         where: {
+             id: productId
+         }
+    }).then(() => {
+         res.redirect("/products");
+    })
+ }
 
 });
 
