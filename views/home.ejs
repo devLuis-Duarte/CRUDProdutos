@@ -3,24 +3,23 @@
 <body>
     <div class="container">
         <hr>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Produto</th>
-                <th>Quantidade</th>
-                <th>Preço</th>
-                <th>Categoria</th>
-            </tr>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                </tr>
-            </tbody>
-        </thead>
-    </table>
     
+        <div class="row justify-content g-2">
+            <% products.forEach(product => { %>
+                <div class="card" style=" width: 20rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= product.name %></h5>
+                        <h5 class="card-text">Preço: R$ <%= product.price %></h5>
+                        <h5 class="card-text">Quantidade em estoque: <%= product.quantity %></h5>
+                        <h5 class="card-text">Fornecedor: <%= product.user.name %></h5>
+                        <h5 class="card-text">E-mail: <%= product.user.email %></h5>
+                        <div class="d-grid gap-2">
+                            <a href="/user/create" class="btn btn-primary">Divulgar produtos</a>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
     </div>
 </body>
 <%- include('./partials/footer.ejs') %>

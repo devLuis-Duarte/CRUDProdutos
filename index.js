@@ -41,7 +41,13 @@ app.use("/", UserController);
 app.use("/", ProductsController);
 
 app.get("/", (req, res) => {
-    res.render("home");
+    Product.findAll({
+        include: {model: User}
+    }).then((products) => {
+        res.render("home", {
+            products: products,
+        });
+    })
 });
 
 app.listen(3000, () => {
