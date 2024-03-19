@@ -15,7 +15,14 @@ const Product = connection.define('products', {
         type: Sequelize.DECIMAL,
         allowNull: false
     },
+    userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    }
 });
+
+User.hasMany(Product);
+Product.belongsTo(User);
 
 Product.sync({force: false});
 

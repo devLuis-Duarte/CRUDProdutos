@@ -10,7 +10,6 @@ const connection  = require("./database/database");
 //models
 const User = require("./users/User");
 const Product = require("./produtcts/Product");
-const ProductUser = require("./productUser/ProductUser");
 
 //controllers
 const UserController = require("./users/UsersController");

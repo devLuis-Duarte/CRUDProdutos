@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("./User");
+const Product = require("../produtcts/Product");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
@@ -37,7 +38,12 @@ router.get("/user/login", (req, res) => {
     const user = req.session.user;
     
     if(user){
-        res.render("products/index");
+        Product.findAll().then((products) => {
+            res.render("products/index", {
+                products: products,
+                user: user
+            });
+        })
     }else {
         res.render("users/login");
     }
@@ -59,9 +65,12 @@ router.post("/user/authenticate", (req, res) => {
                     id: user.id,
                     email: user.email
                 }
-                res.render("products/index", {
-                    user: user
-                });
+                Product.findAll().then((products) => {
+                    res.render("products/index", {
+                        user: user,
+                        products: products
+                    });
+                })
             }else {
                 res.redirect("/user/login")
             }
