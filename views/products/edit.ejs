@@ -3,6 +3,11 @@
 <body>
     <div class="container">
         <hr>
+        <% if(messages !== 'undefined' && messages.error) { %>
+            <div class="alert alert-danger">
+                <%= messages.error %>
+            </div>
+        <% } %>
         <div class="card">
             <div class="card-header">
                 <h3 style="text-align: center;">Edição de produto</h3>

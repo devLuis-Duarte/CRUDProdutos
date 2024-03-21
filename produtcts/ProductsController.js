@@ -93,6 +93,10 @@ router.post("/product/update", (req, res) => {
     var quantity = req.body.quantity;
     var price = req.body.price;
 
+    if(!name || !quantity || !price){
+        req.flash('error', 'Atualize ao menos um dos campos!');
+        res.redirect("/product/edit/"+id);
+    }else {
         if(user){
             Product.update({
                 name: name,
@@ -102,12 +106,14 @@ router.post("/product/update", (req, res) => {
                 where: {
                     id: id
                 }
-            }).then((product) => {
+            }).then(() => {
+                req.flash('success', 'Produto atualizado com sucesso!');
                 res.redirect("/products");
             })
         }else {
             res.redirect("/");
         }
+    }
 });
 
 router.post("/product/delete", (req, res) => {
