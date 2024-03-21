@@ -5,6 +5,8 @@ const Product = require("../produtcts/Product");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const {validationResult} = require("express-validator");
+const flash = require("express-flash");
 
 router.get("/user/create", (req, res) => {
     res.render("users/create");
@@ -15,7 +17,10 @@ router.post("/user/save", (req, res) => {
     var email = req.body.email;
     var password = req.body.password;
     
-    if(email != undefined){
+    if(!name && !email && !password){
+        req.flash('error', 'Por favor preencha todos os campos!');
+        return res.redirect("/user/create");
+    }
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(password, salt);
 
@@ -25,13 +30,11 @@ router.post("/user/save", (req, res) => {
             password: hash,
 
         }).then((user) => {
+            req.flash('success', 'Usuário cadastrado com sucesso!');
             res.render("users/create", {
                 user: user,
             })
         })
-    }else {
-        res.redirect("/");
-    }
 });
 
 router.get("/user/login", (req, res) => {

@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const BodyParser = require("body-parser");
 const session = require("express-session");
+const flash = require("express-flash");
 
 //connection
 const connection  = require("./database/database");
@@ -25,6 +26,8 @@ app.use(express.static('public'));
 //body-parser
 app.use(BodyParser.urlencoded({extended: true}));
 
+//flash messages
+app.use(flash());
 //sessão do usuario
 app.use(session({
     secret: "somesecretword",
