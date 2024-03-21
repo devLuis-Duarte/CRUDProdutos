@@ -83,10 +83,12 @@ router.post("/user/authenticate", (req, res) => {
                     });
                 })
             }else {
+                req.flash('error', 'Senha incorreta!');
                 res.redirect("/user/login")
             }
         }else {
-            res.redirect("/user/create");
+            req.flash('error', 'E-mail ou usuário inválido!');
+            res.redirect("/user/login");
         }
     })
 });
