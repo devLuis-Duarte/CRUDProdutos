@@ -5,6 +5,11 @@
         <hr>
             <a href="/product/create" class="btn btn-success">Cadastrar produto</a>
             <hr>
+            <% if(typeof messages !== 'undefined' && messages.success) { %>
+                <div class="alert alert-success">
+                    <%= messages.success %>
+                </div>
+            <% } %>
             <div class="card">
                 <div class="card-header">
                     <h3 style="text-align: center;">Produtos</h3>

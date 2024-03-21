@@ -45,19 +45,24 @@ router.post("/product/save", (req, res) => {
     var price = req.body.price;
     var userId = req.body.userId;
 
-    if(user){
-        Product.create({
-            name: name,
-            quantity: quantity,
-            price: price,
-            userId: userId
-        }).then(() => {
-            res.redirect("/products");
-        }).catch((error) => {
-            res.redirect("/");
-        })
+    if(name && quantity && price){
+        if(user){
+            Product.create({
+                name: name,
+                quantity: quantity,
+                price: price,
+                userId: userId
+            }).then(() => {
+                req.flash('success', 'Produto cadastrado com sucesso!');
+                res.redirect("/products");
+            }).catch((error) => {
+                res.redirect("/");
+            })
+        }
+    }else {
+        req.flash('error', 'Por favor, preencha todos os campos!');
+        res.redirect("/product/create");
     }
-
 });
 
 router.get("/product/edit/:id", (req, res) => {
@@ -88,21 +93,21 @@ router.post("/product/update", (req, res) => {
     var quantity = req.body.quantity;
     var price = req.body.price;
 
-    if(user){
-        Product.update({
-            name: name,
-            quantity: quantity,
-            price: price,
-        }, {
-            where: {
-                id: id
-            }
-        }).then(() => {
-            res.redirect("/products");
-        })
-    }else {
-        res.redirect("/");
-    }
+        if(user){
+            Product.update({
+                name: name,
+                quantity: quantity,
+                price: price,
+            }, {
+                where: {
+                    id: id
+                }
+            }).then((product) => {
+                res.redirect("/products");
+            })
+        }else {
+            res.redirect("/");
+        }
 });
 
 router.post("/product/delete", (req, res) => {

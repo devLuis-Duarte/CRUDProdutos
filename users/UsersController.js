@@ -18,7 +18,7 @@ router.post("/user/save", (req, res) => {
     var password = req.body.password;
     
     if(!name && !email && !password){
-        req.flash('error', 'Por favor preencha todos os campos!');
+        req.flash('error', 'Por favor, preencha todos os campos!');
         return res.redirect("/user/create");
     }
         var salt = bcrypt.genSaltSync(10);
